@@ -57,7 +57,7 @@ trait DetectsChanges
         return static::$logOnlyDirty;
     }
 
-    public function attributeValuesToBeLogged(string $processingEvent)
+    public function attributeValuesToBeLogged($processingEvent)
     {
         if (! count($this->attributesToBeLogged())) {
             return [];
