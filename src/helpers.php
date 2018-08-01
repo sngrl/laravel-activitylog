@@ -14,7 +14,7 @@ if (! function_exists('activity')) {
         $logStatus = app(ActivityLogStatus::class);
 
         return app(ActivityLogger::class)
-            ->useLog($logName ?: $defaultLogName)
+            ->useLog(($logName ?: $defaultLogName))
             ->setLogStatus($logStatus);
     }
 }
