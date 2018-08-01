@@ -114,21 +114,21 @@ class ActivityLogger
      *
      * @return $this
      */
-    public function withProperty(string $key, $value)
+    public function withProperty($key, $value)
     {
         $this->properties->put($key, $value);
 
         return $this;
     }
 
-    public function useLog(string $logName)
+    public function useLog($logName)
     {
         $this->logName = $logName;
 
         return $this;
     }
 
-    public function inLog(string $logName)
+    public function inLog($logName)
     {
         return $this->useLog($logName);
     }
@@ -152,7 +152,7 @@ class ActivityLogger
      *
      * @return null|mixed
      */
-    public function log(string $description)
+    public function log($description)
     {
         if ($this->logStatus->disabled()) {
             return;
