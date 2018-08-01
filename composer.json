@@ -22,6 +22,10 @@
             "email": "sebastian@spatie.be",
             "homepage": "https://spatie.be",
             "role": "Developer"
+        },
+        {
+            "name": "Sngrl",
+            "role": "Adapter"
         }
     ],
     "require": {
