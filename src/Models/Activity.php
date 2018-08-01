@@ -24,7 +24,7 @@ class Activity extends Model
         parent::__construct($attributes);
     }
 
-    public function subject(): MorphTo
+    public function subject()
     {
         if (config('activitylog.subject_returns_soft_deleted_models')) {
             return $this->morphTo()->withTrashed();
@@ -33,7 +33,7 @@ class Activity extends Model
         return $this->morphTo();
     }
 
-    public function causer(): MorphTo
+    public function causer()
     {
         return $this->morphTo();
     }
@@ -45,12 +45,12 @@ class Activity extends Model
      *
      * @return mixed
      */
-    public function getExtraProperty(string $propertyName)
+    public function getExtraProperty($propertyName)
     {
         return array_get($this->properties->toArray(), $propertyName);
     }
 
-    public function changes(): Collection
+    public function changes()
     {
         if (! $this->properties instanceof Collection) {
             return new Collection();
@@ -61,7 +61,7 @@ class Activity extends Model
         }, ARRAY_FILTER_USE_KEY));
     }
 
-    public function scopeInLog(Builder $query, ...$logNames): Builder
+    public function scopeInLog(Builder $query, ...$logNames)
     {
         if (is_array($logNames[0])) {
             $logNames = $logNames[0];
@@ -78,7 +78,7 @@ class Activity extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeCausedBy(Builder $query, Model $causer): Builder
+    public function scopeCausedBy(Builder $query, Model $causer)
     {
         return $query
             ->where('causer_type', $causer->getMorphClass())
@@ -93,7 +93,7 @@ class Activity extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeForSubject(Builder $query, Model $subject): Builder
+    public function scopeForSubject(Builder $query, Model $subject)
     {
         return $query
             ->where('subject_type', $subject->getMorphClass())

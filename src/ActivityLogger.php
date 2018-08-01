@@ -39,7 +39,7 @@ class ActivityLogger
 
         $this->properties = collect();
 
-        $this->authDriver = $config['activitylog']['default_auth_driver'] ?? $auth->getDefaultDriver();
+        $this->authDriver = $config['activitylog']['default_auth_driver'] ?: $auth->getDefaultDriver();
 
         if (starts_with(app()->version(), '5.1')) {
             $this->causedBy = $auth->driver($this->authDriver)->user();
@@ -49,7 +49,7 @@ class ActivityLogger
 
         $this->logName = $config['activitylog']['default_log_name'];
 
-        $this->logEnabled = $config['activitylog']['enabled'] ?? true;
+        $this->logEnabled = $config['activitylog']['enabled'] ?: true;
 
         $this->logStatus = $logStatus;
     }
@@ -186,7 +186,7 @@ class ActivityLogger
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function normalizeCauser($modelOrId): Model
+    protected function normalizeCauser($modelOrId)
     {
         if ($modelOrId instanceof Model) {
             return $modelOrId;
@@ -205,7 +205,7 @@ class ActivityLogger
         throw CouldNotLogActivity::couldNotDetermineUser($modelOrId);
     }
 
-    protected function replacePlaceholders(string $description, Activity $activity): string
+    protected function replacePlaceholders($description, Activity $activity)
     {
         return preg_replace_callback('/:[a-z0-9._-]+/i', function ($match) use ($activity) {
             $match = $match[0];

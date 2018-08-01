@@ -16,7 +16,7 @@ class CustomActivityModelTest extends TestCase
         $this->activityDescription = 'My activity';
         parent::setUp();
 
-        collect(range(1, 5))->each(function (int $index) {
+        collect(range(1, 5))->each(function ($index) {
             $logName = "log{$index}";
             activity($logName)->log('hello everybody');
         });

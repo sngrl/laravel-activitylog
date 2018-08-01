@@ -612,7 +612,7 @@ class DetectsChangesTest extends TestCase
         $this->assertEquals($expectedChanges, $this->getLastActivity()->changes()->toArray());
     }
 
-    protected function createArticle(): Article
+    protected function createArticle()
     {
         $article = new $this->article();
         $article->name = 'my name';
@@ -621,7 +621,7 @@ class DetectsChangesTest extends TestCase
         return $article;
     }
 
-    protected function createDirtyArticle(): Article
+    protected function createDirtyArticle()
     {
         $articleClass = new class() extends Article {
             public static $logAttributes = ['name', 'text'];

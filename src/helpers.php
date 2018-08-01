@@ -7,7 +7,7 @@ if (! function_exists('activity')) {
     /**
      * @return ActivityLogger
      */
-    function activity(string $logName = null)
+    function activity($logName = null)
     {
         $defaultLogName = config('activitylog.default_log_name');
 

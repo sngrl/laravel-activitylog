@@ -23,7 +23,7 @@ trait DetectsChanges
         }
     }
 
-    public function attributesToBeLogged(): array
+    public function attributesToBeLogged()
     {
         $attributes = [];
 
@@ -48,7 +48,7 @@ trait DetectsChanges
         return $attributes;
     }
 
-    public function shouldlogOnlyDirty(): bool
+    public function shouldlogOnlyDirty()
     {
         if (! isset(static::$logOnlyDirty)) {
             return false;
@@ -57,7 +57,7 @@ trait DetectsChanges
         return static::$logOnlyDirty;
     }
 
-    public function attributeValuesToBeLogged(string $processingEvent): array
+    public function attributeValuesToBeLogged(string $processingEvent)
     {
         if (! count($this->attributesToBeLogged())) {
             return [];
@@ -65,7 +65,7 @@ trait DetectsChanges
 
         $properties['attributes'] = static::logChanges(
             $this->exists
-                ? $this->fresh() ?? $this
+                ? $this->fresh() ?: $this
                 : $this
         );
 
@@ -80,7 +80,13 @@ trait DetectsChanges
                 $properties['attributes'],
                 $properties['old'],
                 function ($new, $old) {
-                    return $new <=> $old;
+                    #return $new <=> $old;
+                    if ($new == $old)
+                        return 0;
+                    elseif ($new > $old)
+                        return 1;
+                    else
+                        return -1;
                 }
             );
             $properties['old'] = collect($properties['old'])
@@ -91,7 +97,7 @@ trait DetectsChanges
         return $properties;
     }
 
-    public static function logChanges(Model $model): array
+    public static function logChanges(Model $model)
     {
         $changes = [];
         foreach ($model->attributesToBeLogged() as $attribute) {
@@ -105,7 +111,7 @@ trait DetectsChanges
         return $changes;
     }
 
-    protected static function getRelatedModelAttributeValue(Model $model, string $attribute): array
+    protected static function getRelatedModelAttributeValue(Model $model, $attribute)
     {
         if (substr_count($attribute, '.') > 1) {
             throw CouldNotLogChanges::invalidAttribute($attribute);
@@ -113,8 +119,8 @@ trait DetectsChanges
 
         list($relatedModelName, $relatedAttribute) = explode('.', $attribute);
 
-        $relatedModel = $model->$relatedModelName ?? $model->$relatedModelName();
+        $relatedModel = $model->$relatedModelName ?: $model->$relatedModelName();
 
-        return ["{$relatedModelName}.{$relatedAttribute}" => $relatedModel->$relatedAttribute ?? null];
+        return ["{$relatedModelName}.{$relatedAttribute}" => $relatedModel->$relatedAttribute ?: null];
     }
 }

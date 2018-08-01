@@ -54,17 +54,17 @@ trait LogsActivity
         return $this;
     }
 
-    public function activity(): MorphMany
+    public function activity()
     {
         return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
     }
 
-    public function getDescriptionForEvent(string $eventName): string
+    public function getDescriptionForEvent($eventName)
     {
         return $eventName;
     }
 
-    public function getLogNameToUse(string $eventName = ''): string
+    public function getLogNameToUse($eventName = '')
     {
         if (isset(static::$logName)) {
             return static::$logName;
@@ -76,7 +76,7 @@ trait LogsActivity
     /*
      * Get the event names that should be recorded.
      */
-    protected static function eventsToBeRecorded(): Collection
+    protected static function eventsToBeRecorded()
     {
         if (isset(static::$recordEvents)) {
             return collect(static::$recordEvents);
@@ -95,7 +95,7 @@ trait LogsActivity
         return $events;
     }
 
-    public function attributesToBeIgnored(): array
+    public function attributesToBeIgnored()
     {
         if (! isset(static::$ignoreChangedAttributes)) {
             return [];
@@ -104,7 +104,7 @@ trait LogsActivity
         return static::$ignoreChangedAttributes;
     }
 
-    protected function shouldLogEvent(string $eventName): bool
+    protected function shouldLogEvent($eventName)
     {
         if (! $this->enableLoggingModelsEvents) {
             return false;

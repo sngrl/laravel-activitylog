@@ -39,9 +39,9 @@ class ActivitylogServiceProvider extends ServiceProvider
         $this->app->singleton(ActivityLogStatus::class);
     }
 
-    public static function determineActivityModel(): string
+    public static function determineActivityModel()
     {
-        $activityModel = config('activitylog.activity_model') ?? Activity::class;
+        $activityModel = config('activitylog.activity_model') ?: Activity::class;
 
         if (! is_a($activityModel, Activity::class, true)) {
             throw InvalidConfiguration::modelIsNotValid($activityModel);
@@ -50,7 +50,7 @@ class ActivitylogServiceProvider extends ServiceProvider
         return $activityModel;
     }
 
-    public static function getActivityModelInstance(): Model
+    public static function getActivityModelInstance()
     {
         $activityModelClassName = self::determineActivityModel();
 

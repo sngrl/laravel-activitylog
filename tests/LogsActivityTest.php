@@ -247,7 +247,7 @@ class LogsActivityTest extends TestCase
             use LogsActivity;
             use SoftDeletes;
 
-            public function getDescriptionForEvent(string $eventName): string
+            public function getDescriptionForEvent($eventName)
             {
                 return ":causer.name $eventName";
             }
@@ -267,7 +267,7 @@ class LogsActivityTest extends TestCase
         $this->assertEquals(':causer.name updated', $activities[1]->description);
     }
 
-    protected function createArticle(): Article
+    protected function createArticle()
     {
         $article = new $this->article();
         $article->name = 'my name';

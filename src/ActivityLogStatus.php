@@ -13,17 +13,17 @@ class ActivityLogStatus
         $this->enabled = $config['activitylog.enabled'];
     }
 
-    public function enable(): bool
+    public function enable()
     {
         return $this->enabled = true;
     }
 
-    public function disable(): bool
+    public function disable()
     {
         return $this->enabled = false;
     }
 
-    public function disabled(): bool
+    public function disabled()
     {
         return $this->enabled === false;
     }
